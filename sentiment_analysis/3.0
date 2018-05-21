@@ -1,0 +1,9 @@
+Collecting pytest
+  Downloading pytest-3.2.3-py2.py3-none-any.whl (187kB)
+Collecting colorama; sys_platform == "win32" (from pytest)
+  Downloading colorama-0.3.9-py2.py3-none-any.whl
+Requirement already up-to-date: setuptools in f:\doan\programming\django\env27\lib\site-packages (from pytest)
+Collecting py>=1.4.33 (from pytest)
+  Downloading py-1.4.34-py2.py3-none-any.whl (84kB)
+Installing collected packages: colorama, py, pytest
+Successfully installed colorama-0.3.9 py-1.4.34 pytest-3.2.3

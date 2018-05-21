@@ -1,0 +1,91 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'lazada/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'lazada/detail.css' %}"/>
+
+
+<body>
+<!-- MAIN (Center website) -->
+<div class="main">
+	<a href="{% url 'lazada:index' %}"><h1>LAZADA</h1></a>
+	<form method=get action="{% url 'lazada:results' %}"> 
+		{% csrf_token %}
+  		<input type="text" name="search" placeholder="Search..">
+	</form>
+	<hr>
+
+	<h2>PRODUCTS</h2>
+	<div style="width: 70%">
+		<div class="w3-container w3-teal">
+			<h3>{{ product.name }}</h3>
+		</div>
+		<div class="w3-content">
+
+			<div class="w3-row w3-margin">
+
+				<div class="w3-third">
+					<img src="{{ product.image_url }}" alt="{{ product.name }}" style="width:100%;min-height:200px">
+				</div>
+				<div class="w3-twothird w3-container">
+					<h3>{{ product.price_final }} VND</h3>
+					<p>Tiết kiệm: {{ product.discount }} %</p>
+					<p>Điểm đánh giá trung bình của sản phẩm:  {{product.product_rating}} </p>
+					<p>Hãng: <a href="{% url 'lazada:brand' product.brand %}">{{ product.brand }}</a> - Được bán bởi: <a href="{% url 'lazada:vendor' product.vendor %}">{{ product.vendor }}</a></p>
+					<a href="{{ product.link_product }}"><button class="button button4">Website</button></a>
+				</div>
+			</div>
+
+			<div class="w3-row w3-margin">
+				<p>{{ total_comments }} nhận xét</p>
+				{% if pos_percent %}
+					<p>{{ pos_percent }}% bình luận tích cực.</p>
+				{% endif %}
+			</div>
+
+			<div class="tab">
+			  <button class="tablinks" onclick="openCity(event, 'positive')">{{ count_pos }} tích cực</button>
+			  <button class="tablinks" onclick="openCity(event, 'negative')">{{ count_neg }} tiêu cực</button>
+			  <!-- <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button> -->
+			</div>
+
+			<div id="positive" class="tabcontent">
+				{% if poss %}
+					<ul>
+					{% for pos in poss %}
+					    <li>{{ pos.detail }}</li>
+					    <!-- <li>1</li> -->
+					{% endfor %}
+					</ul>
+			{% endif %}
+			</div>
+
+			<div id="negative" class="tabcontent">
+				{% if negs %}
+					<ul>
+					{% for neg in negs %}
+					    <li>{{ neg.detail }}</li>
+					    <!-- <li>1</li> -->
+					{% endfor %}
+					</ul>
+				{% endif %} 
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
+</body>
+
